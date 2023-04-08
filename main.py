@@ -1,7 +1,5 @@
 import os
-
 from flask import Flask, render_template, request, url_for, redirect, session, flash
-from config import config
 from supabase import create_client, Client
 
 app = Flask(__name__)
