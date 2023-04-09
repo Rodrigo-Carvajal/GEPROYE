@@ -1,0 +1,88 @@
+{% extends "layouts/index.html" %}
+
+{% block title %}Editar iteraciones{% endblock %}
+
+{% block body %}  
+<div class="col-6 card">
+    <h4 class="card-text">Proyecto {{proyecto.nombre}}</h4>            
+        <div class="border">
+            <div class="navbar">
+                <div class="nav-item">
+                    <div class="table-responsive-xl">
+                        <table class="table table-primary">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id de la Iteracion</th>                                    
+                                    <th scope="col">Fecha_inicio</th>
+                                    <th scope="col">Fecha_termino</th>
+                                   
+                                </tr>
+                            </thead>                                
+                            <tbody>                                                                                  
+                                <tr class="">
+                                    <td scope="row">{{ iteracion.id }}</td>
+                                  
+                                    <td scope="row">{{ iteracion.fecha_inicio }}</td>
+                                    <td scope="row">{{ iteracion.fecha_termino }}</td>
+                                 
+                                </tr>                                                                    
+                            </tbody>                                
+                        </table>
+                    </div>                            
+                </div>
+            </div>                                        
+        </div>                
+</div>
+<div class="col">                
+        <form action="/editarIteracion/{{iteracion.id}}/{{proyecto.id}}" method="POST">
+            <div class="card">          
+                <div class="card-body">
+                    <h4 class="card-title">Formulario de edición de iteracion</h4>
+                    <div class="form-floating mb-3">
+                        <input type="number" name="fk_proyecto" id="fk_proyecto" value="{{iteracion.id}}" disabled class="form-control" hidden placeholder=" ">
+                        <label for="fk_proyecto">Id de la iteracion:</label>                    
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="date" name="fecha_inicio" id="fecha_inicio"  class="form-control" placeholder=" ">
+                        <label for="fecha_inicio">Fecha de inicio de iteración</label>                    
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="date" name="fecha_termino" id="fecha_termino" class="form-control" placeholder=" ">
+                        <label for="fecha_termino">Fecha de termino de iteración:</label>                    
+                    </div>
+                   
+                </div>
+
+                <div class="text-center mb-2">
+                    <button class="btn btn-primary btn-lg" type="submit">
+                        <i class="fa-solid fa-add"></i> Actualizar iteracion
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>     
+
+
+
+
+
+
+
+
+<div class="row mt-2" fade> 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="d-flex align-items-center justify-content-center">
+                {% for category,message in messages %}
+                    <div class="alert col-lg-12  alert-{{category}} alert-dismissible show fade" role="alert">
+                        <strong>{{message}}</strong> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                        
+                    </div>    
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    </div>
+
+{% endblock %}

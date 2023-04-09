@@ -30,11 +30,13 @@
                                         <td scope="row">{{ proyecto.fecha_termino }}</td>
                                         <td scope="row">{{ proyecto.estado }}</td>
                                         <td scope="row">
-                                        <div class="nav-item">
-                                            <a class="btn btn-warning m-1" href="/iteraciones/{{proyecto.id}}" role="button"><i class="fa-regular fa-eye"></i>Iteraciones</a>
-                                            <a class="btn btn-primary m-1" href="/editarProy/{{proyecto.id}}" role="button"><i class="fa-solid fa-edit"></i>Editar</a>
-                                            <a class="btn btn-danger m-1" href="/eliminarProy/{{proyecto.id}}" role="button"><i class="fa-solid fa-x"></i>Eliminar</a>
-                                        </div>
+                                            <div class="nav-item">                            
+                                                <a class="btn btn-success m-1" href="/integrantes/{{proyecto.id}}" role="button"><i class="fa-solid fa-edit"></i>Integrantes</a>
+                                                <a class="btn btn-primary m-1" href="/editarProyecto/{{proyecto.id}}" role="button"><i class="fa-regular fa-edit"></i>Editar</a>                                                    
+                                                <a class="btn btn-warning m-1" href="/iteraciones/{{proyecto.id}}" role="button"><i class="fa-regular fa-eye"></i>Iteraciones</a>
+                                                <a class="btn btn-danger m-1" href="/eliminarProyecto/{{proyecto.id}}" role="button"><i class="fa-solid fa-x"></i>Eliminar</a>                                                
+                                                <a class="btn btn-info m-1" href="/requisitos/{{proyecto.id}}" role="button"><i class="fa-solid fa-book"></i>Requisitos</a>                                                                                                                    
+                                            </div>
                                         </td>
                                     </tr>                                    
                                 {% endfor %}
@@ -62,11 +64,11 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" placeholder=" ">
-                            <label for="fecha_inicio">Nombre de proyecto:</label>                    
+                            <label for="fecha_inicio">Fecha de inicio:</label>                    
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" name="fecha_termino" id="fecha_termino" class="form-control" placeholder=" ">
-                            <label for="fecha_termino">Nombre de proyecto:</label>                    
+                            <label for="fecha_termino">Fecha de termino:</label>                    
                         </div>                
                     </div>
                     <div class="text-center mb-2">
