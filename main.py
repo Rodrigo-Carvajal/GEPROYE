@@ -25,7 +25,7 @@ def crearProyecto():
         fecha_termino = request.form['fecha_termino']        
         proyecto = {'id': idproye, 'nombre': nombre, 'fecha_inicio': fecha_inicio, 'fecha_termino': fecha_termino}
         insert = supabase.table('proyecto').insert(proyecto).execute()
-        flash('Proyecto eliminado exitosamente', 'success')
+        flash('Proyecto creado exitosamente', 'success')
     return redirect(url_for('index'))
 
 @app.route('/eliminarProyecto/<int:id>', methods=['GET','POST']) #LISTOCA
@@ -42,6 +42,7 @@ def editarProyecto(id):
         fecha_termino = request.form['fecha_termino']
         estado = request.form['estado']
         update = supabase. table('proyecto').update({"nombre": nombre, "fecha_inicio": fecha_inicio, "fecha_termino":fecha_termino, "estado": estado}).eq("id", id).execute()
+        flash('Proyecto editado exitosamente', 'info')
         return redirect(url_for('index'))
     proyecto = supabase.table('proyecto').select("*").eq("id", id).execute()
     return render_template('views/editarProy.html', proyecto=proyecto.data[0])
@@ -52,6 +53,7 @@ def editarInteracion(id,fk_proyecto):
         fecha_inicio = request.form['fecha_inicio']
         fecha_termino = request.form['fecha_termino']
         update = supabase.table('iteracion').update({"fecha_inicio": fecha_inicio, "fecha_termino": fecha_termino}).eq("fk_proyecto", fk_proyecto).eq("id", id).execute()
+        flash('Iteración editada exitosamente', 'info')
         return redirect(url_for('index'))
     iteracion = supabase.table('iteracion').select("*").eq("id", id).execute()
     proyecto = supabase.table('proyecto').select("*").eq("id", fk_proyecto).execute()
@@ -65,7 +67,9 @@ def iteraciones(id):
         fecha_inicio= request.form['fecha_inicio']
         fecha_termino=request.form['fecha_termino']
         iteracion = {'id': id_iteracion, 'fk_proyecto': fk_proyecto, 'fecha_inicio': fecha_inicio, 'fecha_termino':fecha_termino}
-        insert = supabase.table('iteracion').insert(iteracion).execute()        
+        insert = supabase.table('iteracion').insert(iteracion).execute()
+        flash('Iteración creada exitosamente', 'success')
+        return redirect(url_for('iteraciones', id=id))        
     proyecto = supabase.table('proyecto').select("*").eq("id", id).order('id').execute()    
     iteracion = supabase.table('iteracion').select("*").eq("fk_proyecto", id).order('id').execute()
     return render_template('views/iteraciones.html', proyecto=proyecto.data[0], iteracion=iteracion.data)
@@ -90,6 +94,8 @@ def crearRequisito(id):
         descripcion = request.form['descripcion']
         requisito = {"id": idreq, "fk_proyecto": id, "tipo": tipo, "descripcion": descripcion}
         insert = supabase.table('requisito').insert(requisito).execute()
+        flash('Requisito creado exitosamente', 'success')
+        return redirect(url_for('requisitos', id=id))
     proyecto = supabase.table('proyecto').select("*").eq("id", id).execute()
     return redirect(url_for('requisitos', id=id)) #Así se pueden asignar las vistas en vez de tener que mandarlos a index
 
@@ -99,7 +105,8 @@ def editarRequisito(fk_proyecto, id):
         tipo = request.form['tipo']
         descripcion = request.form['descripcion']
         update = supabase.table('requisito').update({"tipo": tipo,"descripcion": descripcion}).eq("fk_proyecto", fk_proyecto).eq("id", id).execute()
-        return redirect(url_for('index'))
+        flash('Requisito editado exitosamente', 'info')
+        return redirect(url_for('requisitos', id=id))
     requisito = supabase.table('requisito').select("*").eq("id", id).execute()
     proyecto = supabase.table('proyecto').select("*").eq("id", fk_proyecto).execute()
     return render_template('views/editarRequisito.html', requisito=requisito.data[0], proyecto=proyecto.data[0])
