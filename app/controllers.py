@@ -1,6 +1,7 @@
 from app import app, supabase
 from flask import Flask, render_template, request, url_for, redirect, flash, Blueprint
 
+#Blueprint de la aplicación
 geproyeBp = Blueprint('app', __name__)
 
 @app.route('/', methods=['GET','POST'])
