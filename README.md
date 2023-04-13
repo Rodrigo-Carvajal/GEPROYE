@@ -1,7 +1,7 @@
 GEPROYE <br>
 Sistema que tiene como objetivo gestionar proyectos y sus iteraciones, actividades a realizar, requisitos e integrantes.
 
-[![Aplicación alojada en:](https://railway.app/button.svg), (geproye.up.railway.app)]
+[![Aplicación alojada en:](https://railway.app/button.svg)](geproye.up.railway.app)
 
 # Requisitos
 
