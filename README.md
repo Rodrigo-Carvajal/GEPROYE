@@ -16,23 +16,26 @@ Si no cuenta con esta extensión se puede agregar con el siguiente comando: `pip
   `git clone "https://github.com/Rodrigo-Carvajal/Geproye.git"`
 
 # Configurar el enterno virutal
-  ### Crear el entorno
+   Crear el entorno
+  
   `python -m venv env`
-  ### Acceder al directorio
+   Acceder al directorio
+  
   `.\env\Scripts\activate`
-  ### Instalar dependencias
+   Instalar dependencias
+  
   `pip install -r requirements.txt`
   
 # Arrancar la aplicación en modo desarrollo:
-  ## Al momento de arrancar la aplicación puede realizarse de dos maneras:
-  ### A través del comando python
-    - Una vez que se encuentre activo el entorno virtual y con las
-      dependencias correctamente instaladas, ejecutamos la aplicación a través de:
-      `python directorio/main.py`
-  ### A través del comando flask run
-    - Para ejecutar con este comando primero se deben definir las siguientes variables por consola
-      -`set FLASK_APP=main` en windows
-      -`export FLASK_APP=main` en linux
+   ## A través del comando python
+   Una vez que se encuentre activo el entorno virtual y con las
+      dependencias correctamente instaladas, ejecutamos la aplicación a través de:      
+   <br> `python directorio/main.py`
+   ## A través del comando flask run<br>
+   Para ejecutar con este comando primero se deben definir las siguientes variables por consola      
+      <br>`set FLASK_APP=main` en windows<br>
+      <br>`export FLASK_APP=main` en linux
+      <br><br> Luego se ejecuta el comando <strong>flask run</strong> en consola
 
 # Despliegue de la aplicación en producción:
-  Con respecto al despliegue de la aplicación, esta fue gestionada a través de <strong>Railway</strong>, con una base de datos alojada en <strong>Supabase</strong>.
+  Con respecto al despliegue de la aplicación, esta fue auto gestionada a través de <strong>Railway</strong>.
