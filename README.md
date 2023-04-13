@@ -1,23 +1,38 @@
----
-title: Flask
-description: A popular minimal server framework for Python
-tags:
-  - python
-  - flask
----
+GEPROYE <br>
+Sistema que tiene como objetivo gestionar proyectos y sus iteraciones, actividades a realizar, requisitos e integrantes.
 
-# Python Flask Example
+[![Aplicación alojada en:](https://railway.app/button.svg)](geproye.up.railway.app)
 
-This is a [Flask](https://flask.palletsprojects.com/en/1.1.x/) app that serves a simple JSON response.
+# Requisitos
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/zUcpux)
+- Python 3.10
+- extensión de virtualenv
 
-## ✨ Features
+Si no cuenta con esta extensión se puede agregar con el siguiente comando: `pip install virtualenv`
 
-- Python
-- Flask
+# 💁‍♀️ Como usar el código
 
-## 💁‍♀️ How to use
+# Clonar el repositorio
+  `git clone "https://github.com/Rodrigo-Carvajal/Geproye.git"`
 
-- Install Python requirements `pip install -r requirements.txt`
-- Start the server for development `python3 main.py`
+# Configurar el enterno virutal
+  ### Crear el entorno
+  `python -m venv env`
+  ### Acceder al directorio
+  `.\env\Scripts\activate`
+  ### Instalar dependencias
+  `pip install -r requirements.txt`
+  
+# Arrancar la aplicación en modo desarrollo:
+  ## Al momento de arrancar la aplicación puede realizarse de dos maneras:
+  ### A través del comando python
+    - Una vez que se encuentre activo el entorno virtual y con las
+      dependencias correctamente instaladas, ejecutamos la aplicación a través de:
+      `python directorio/main.py`
+  ### A través del comando flask run
+    - Para ejecutar con este comando primero se deben definir las siguientes variables por consola
+      -`set FLASK_APP=main` en windows
+      -`export FLASK_APP=main` en linux
+
+# Despliegue de la aplicación en producción:
+  Con respecto al despliegue de la aplicación, esta fue gestionada a través de <strong>Railway</strong>, con una base de datos alojada en <strong>Supabase</strong>.
