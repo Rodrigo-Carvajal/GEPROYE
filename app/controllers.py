@@ -1,6 +1,5 @@
 from app import app, supabase_1, supabase_2
 from flask import Flask, render_template, request, url_for, redirect, flash, Blueprint, g
-import supabase
 
 #Blueprint de la aplicación
 geproyeBp = Blueprint('app', __name__)
@@ -11,7 +10,7 @@ def before_request():
     try:
         connection = supabase_1
         response = connection.table('proyecto').select("*").execute()
-        if response:
+        if response.code != 200:
             g.db = connection
             print("¡Conectado a la primera base de datos!")
         else:
