@@ -10,7 +10,8 @@ def before_request():
     try:
         connection = supabase_1
         response = connection.table('proyecto').select("*").execute()
-        if response['code'] == 200:
+        print(response)
+        if response:
             g.db = connection
             print("¡Conectado a la primera base de datos!")
         else:
