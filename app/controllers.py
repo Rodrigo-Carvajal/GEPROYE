@@ -19,7 +19,6 @@ def before_request():
         print(f"El intento de conexión a la primera base de datos arrojó el siguiente error:\n{e}")
         connection = supabase_2
         print("¡Conectado a la base de datos de respaldo!")
-
     # Save the connection to the global context
     g.db = connection
 
@@ -157,3 +156,44 @@ def eliminarIntegrante(fk_proyecto, id):
     delete = g.db.table('integrante').delete().eq("id", id).eq("fk_proyecto", fk_proyecto).execute()
     flash('Usuario eliminado exitosamente', 'danger')
     return redirect(url_for('integrantes', id=fk_proyecto))
+
+@app.route('/compare', methods=['GET', 'POST'])
+def compare():
+    proyectos_1 = supabase_1.table('proyecto').select("*").execute()
+    proyectos_2 = supabase_2.table('proyecto').select("*").execute()
+    proyectos_1_iteraciones = supabase_1.table('iteracion').select("*").execute()
+    proyectos_2_iteraciones = supabase_2.table('iteracion').select("*").execute()
+    proyectos_1_integrantes = supabase_1.table('integrante').select("*").execute()
+    proyectos_2_integrantes = supabase_2.table('integrante').select("*").execute()
+    proyectos_1_requisitos = supabase_1.table('requisito').select("*").execute()
+    proyectos_2_requisitos = supabase_2.table('requisito').select("*").execute()
+    #print(proyectos_1)
+    return render_template('views/compare.html', proyectos_1=proyectos_1.data, proyectos_2=proyectos_2.data, proyectos_1_iteraciones=proyectos_1_iteraciones.data, proyectos_2_iteraciones=proyectos_2_iteraciones.data, proyectos_1_requisitos=proyectos_1_requisitos.data, proyectos_2_requisitos=proyectos_2_requisitos.data, proyectos_1_integrantes=proyectos_1_integrantes.data, proyectos_2_integrantes=proyectos_2_integrantes.data)
+
+@app.route('/backup', methods=['GET','POST'])
+def backup():
+    proyectos_1 = supabase_1.table('proyecto').select("*").execute()
+    dictionary_1 = proyectos_1.data
+    proyectos_1_iteracion = supabase_1.table('iteracion').select("*").execute()
+    dictionary_1_iteracion = proyectos_1_iteracion.data
+    proyectos_1_requisito = supabase_1.table('requisito').select("*").execute()
+    dictionary_1_requisito = proyectos_1_requisito.data
+    proyectos_1_integrante = supabase_1.table('integrante').select("*").execute()
+    dictionary_1_integrante = proyectos_1_integrante.data
+    proyectos_2 = supabase_2.table('proyecto').select("id").execute()
+    dictionary_2 = proyectos_2.data
+    for list in dictionary_2:
+        value = list['id']
+        deleteProyecto = supabase_2.table("proyecto").delete().eq("id", value).execute()
+        deleteIteracion = supabase_2.table("iteracion").delete().eq("id", value).execute()
+        deleteIntegrante = supabase_2.table("integrante").delete().eq("id", value).execute()
+        deleteRequisito = supabase_2.table("requisito").delete().eq("id", value).execute()
+    for list in dictionary_1:
+        insertProyecto = supabase_2.table("proyecto").insert(list).execute()
+    for list in dictionary_1_iteracion:
+        insertProyecto = supabase_2.table("iteracion").insert(list).execute()
+    for list in dictionary_1_integrante:
+        insertProyecto = supabase_2.table("integrante").insert(list).execute()
+    for list in dictionary_1_requisito:
+        insertProyecto = supabase_2.table("requisito").insert(list).execute()
+    return redirect(url_for('compare'))

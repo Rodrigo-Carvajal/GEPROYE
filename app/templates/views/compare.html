@@ -1,0 +1,239 @@
+{% extends "layouts/index.html" %}
+
+{% block title %}Comparar DBs{% endblock %}
+
+{% block body %}        
+<div class="row mt-1">
+    <div class="col-6 card">
+        <h4 class="card-text">Lista de proyectos</h4>            
+            <div class="border">
+                <div class="navbar">
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id de proyecto</th>
+                                        <th scope="col">Nombre de proyecto</th>
+                                        <th scope="col">Fecha_inicio</th>
+                                        <th scope="col">Fecha_termino</th>
+                                        <th scope="col">Estado</th>
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_1 %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.nombre }}</td>
+                                        <td scope="row">{{ proyecto.fecha_inicio }}</td>
+                                        <td scope="row">{{ proyecto.fecha_termino }}</td>
+                                        <td scope="row">{{ proyecto.estado }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id del proyecto</th>
+                                        <th scope="col">Iteración del proyecto</th>
+                                        <th scope="col">Fecha_inicio</th>
+                                        <th scope="col">Fecha_termino</th>
+                                        
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_1_iteraciones %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.fk_id_proyecto }}</td>
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.fecha_inicio }}</td>
+                                        <td scope="row">{{ proyecto.fecha_termino }}</td>                                        
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre de integrante</th>
+                                        <th scope="col">Id de proyecto</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Cargo</th>
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_1_integrantes %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.fk_proyecto }}</td>
+                                        <td scope="row">{{ proyecto.nombre }}</td>
+                                        <td scope="row">{{ proyecto.cargo }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id de proyecto</th>
+                                        <th scope="col">Id de requisito</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Tipo</th>
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_1_requisitos %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.fk_proyecto }}</td>
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.descripcion }}</td>
+                                        <td scope="row">{{ proyecto.tipo }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                </div>                                        
+            </div>                
+    </div>
+
+    <div class="col-6 card">
+        <h4 class="card-text">Lista de proyectos</h4>            
+            <div class="border">
+                <div class="navbar">
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id de proyecto</th>
+                                        <th scope="col">Nombre de proyecto</th>
+                                        <th scope="col">Fecha_inicio</th>
+                                        <th scope="col">Fecha_termino</th>
+                                        <th scope="col">Estado</th>
+
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_2 %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.nombre }}</td>
+                                        <td scope="row">{{ proyecto.fecha_inicio }}</td>
+                                        <td scope="row">{{ proyecto.fecha_termino }}</td>
+                                        <td scope="row">{{ proyecto.estado }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id de proyecto</th>
+                                        <th scope="col">Nombre de proyecto</th>
+                                        <th scope="col">Fecha_inicio</th>
+                                        <th scope="col">Fecha_termino</th>
+                                        
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_2_iteraciones %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.nombre }}</td>
+                                        <td scope="row">{{ proyecto.fecha_inicio }}</td>
+                                        <td scope="row">{{ proyecto.fecha_termino }}</td>
+                                        
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Nombre de integrante</th>
+                                        <th scope="col">Id de proyecto</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Cargo</th>
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_2_integrantes %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.fk_proyecto }}</td>
+                                        <td scope="row">{{ proyecto.nombre }}</td>
+                                        <td scope="row">{{ proyecto.cargo }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                    <div class="nav-item">
+                        <div class="table-responsive-xl">
+                            <table class="table table-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id de proyecto</th>
+                                        <th scope="col">Id de requisito</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Tipo</th>
+                                    </tr>
+                                </thead>                                
+                                <tbody>
+                                {% for proyecto in proyectos_2_requisitos %}                                    
+                                    <tr class="">
+                                        <td scope="row">{{ proyecto.fk_proyecto }}</td>
+                                        <td scope="row">{{ proyecto.id }}</td>
+                                        <td scope="row">{{ proyecto.descripcion }}</td>
+                                        <td scope="row">{{ proyecto.tipo }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                                </tbody>                                
+                            </table>
+                        </div>                            
+                    </div>
+                </div>                                        
+            </div>                
+    </div>
+
+    <div class="row mt-2" fade> 
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="d-flex align-items-center justify-content-center">
+                    {% for category,message in messages %}
+                        <div class="alert col-lg-12  alert-{{category}} alert-dismissible show fade" role="alert">
+                            <strong>{{message}}</strong> 
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                        
+                        </div>    
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        </div>
+    </div>
+</div>       
+{% endblock %}
