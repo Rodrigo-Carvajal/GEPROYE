@@ -2,46 +2,41 @@
 
 {% block title %}Editar proyecto{% endblock %}
 
-{% block body %}        
-    <div class="col-6 card">
+{% block body %}
+<div class="row">
+    <div class="col-6">
         <h4 class="card-text">Proyecto {{proyecto.nombre}}</h4>            
-            <div class="border">
-                <div class="navbar">
-                    <div class="nav-item">
-                        <div class="table-responsive-xl">
-                            <table class="table table-primary">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id del proyecto</th>
-                                        <th scope="col">Nombre del proyecto</th>                                        
-                                        <th scope="col">Fecha_inicio</th>
-                                        <th scope="col">Fecha_termino</th>
-                                        <th scope="col">Estado</th>
-                                    </tr>
-                                </thead>                                
-                                <tbody>                                                                                  
-                                    <tr class="">
-                                        <td scope="row">{{ proyecto.id }}</td>
-                                        <td scope="row">{{ proyecto.nombre }}</td>
-                                        <td scope="row">{{ proyecto.fecha_inicio }}</td>
-                                        <td scope="row">{{ proyecto.fecha_termino }}</td>
-                                        <td scope="row">{{ proyecto.estado }}</td>
-                                    </tr>                                                                    
-                                </tbody>                                
-                            </table>
-                        </div>                            
-                    </div>
-                </div>                                        
-            </div>                
+        <div class="table-responsive">
+            <div class="table-responsive-xl">
+                <table class="table table-primary table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id del proyecto</th>
+                            <th scope="col">Nombre del proyecto</th>                                        
+                            <th scope="col">Fecha_inicio</th>
+                            <th scope="col">Fecha_termino</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>                                
+                    <tbody>                                                                                  
+                        <tr class="">
+                            <td scope="row">{{ proyecto.id }}</td>
+                            <td scope="row">{{ proyecto.nombre }}</td>
+                            <td scope="row">{{ proyecto.fecha_inicio }}</td>
+                            <td scope="row">{{ proyecto.fecha_termino }}</td>
+                            <td scope="row">{{ proyecto.estado }}</td>
+                        </tr>                                                                    
+                    </tbody>                                
+                </table>
+            </div>                                                                    
+        </div>                
     </div>
 
-
-
-    <div class="col">                
-        <form action="/editarProyecto/{{proyecto.id}}" method="POST">
-            <div class="card">          
-                <div class="card-body">
-                    <h4 class="card-title">Formulario de edición de proyecto</h4>
+    <div class="col-6">
+        <h4 class="card-title">Formulario de edición de proyecto</h4>
+        <div class="mt-2">          
+            <form action="/editarProyecto/{{proyecto.id}}" method="POST">
+                <div class="">                    
                     <div class="form-floating mb-3">
                         <input type="number" name="fk_proyecto" id="fk_proyecto" value="{{proyecto.id}}" class="form-control" hidden placeholder=" ">
                         <label for="fk_proyecto">Id de proyecto:</label>                    
@@ -69,9 +64,10 @@
                         <i class="fa-solid fa-add"></i> Actualizar proyecto
                     </button>
                 </div>
-            </div>
-        </form>
-    </div>       
+            </form>
+        </div>
+    </div>    
+</div>   
     <div class="row mt-2" fade> 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}

@@ -2,75 +2,71 @@
 
 {% block title %}Integrantes{% endblock %}
 
-{% block body %}   
-<div class="col-6 card">
-    <h4 class="card-text">Integrantes del proyecto {{proyecto.nombre}}</h4>            
-        <div class="border">
-            <div class="navbar">
-                <div class="nav-item">
-                    <div class="table-responsive-xl">
-                        <table class="table table-primary">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Id del integrante</th>
-                                    <th scope="col">Nombre del integrante</th>                                        
-                                    <th scope="col">Cargo</th>
-                                    <th scope="col">Acciones</th>
-                                </tr>
-                            </thead>                                
-                            <tbody>                                                        
-                            {% for integrante in integrantes %}                                    
-                                <tr class="">
-                                    <td scope="row">{{ integrante.id }}</td>
-                                    <td scope="row">{{ integrante.nombre }}</td>
-                                    <td scope="row">{{ integrante.cargo }}</td>
-                                    <td scope="row">
-                                    <div class="nav-item">
-                                        <a class="btn btn-primary m-1" href="/editarIntegrante/{{proyecto.id}}/{{integrante.id}}" role="button"><i class="fa-solid fa-edit"></i>Editar</a>
-                                        <a class="btn btn-danger m-1" href="/eliminarIntegrante/{{proyecto.id}}/{{integrante.id}}" role="button"><i class="fa-solid fa-x"></i>Eliminar</a>
-                                    </div>
-                                    </td>
-                                </tr>                                    
-                            {% endfor %}
-                            </tbody>                                
-                        </table>
-                    </div>                            
-                </div>
-            </div>                                        
-        </div>                
-</div>
+{% block body %}
+<div class="row mt-1">
+    <div class="col-6">
+        <h4 class="card-text">Integrantes del proyecto {{proyecto.nombre}}</h4>            
+            <div class="table-responsive">
+                <table class="table table-primary table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id del integrante</th>
+                            <th scope="col">Nombre del integrante</th>                                        
+                            <th scope="col">Cargo</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>                                
+                    <tbody>                                                        
+                    {% for integrante in integrantes %}                                    
+                        <tr class="">
+                            <td scope="row">{{ integrante.id }}</td>
+                            <td scope="row">{{ integrante.nombre }}</td>
+                            <td scope="row">{{ integrante.cargo }}</td>
+                            <td scope="row">
+                                <div class="nav-item">
+                                    <a class="btn btn-primary m-1" href="/editarIntegrante/{{proyecto.id}}/{{integrante.id}}" role="button"><i class="fa-solid fa-edit"></i>Editar</a>
+                                    <a class="btn btn-danger m-1" href="/eliminarIntegrante/{{proyecto.id}}/{{integrante.id}}" role="button"><i class="fa-solid fa-x"></i>Eliminar</a>
+                                </div>
+                            </td>
+                        </tr>                                    
+                    {% endfor %}
+                    </tbody>                                
+                </table>
+            </div>                                                    
+    </div>
 
-<div class="col">                
-    <form action="/integrantes/{{proyecto.id}}" method="POST">
-        <div class="card">          
-            <div class="card-body">
-                <h4 class="card-title">Formulario de creación de integrantes</h4>
-                <div class="form-floating mb-3">
-                    <input type="number" name="fk_proyecto" id="fk_proyecto" value="{{proyecto.id}}" class="form-control" disabled hidden placeholder=" ">
-                    <label for="fk_proyecto">Id de proyecto:</label>                    
+    <div class="col-6">
+        <h4 class="card-title">Formulario de creación de integrantes</h4>
+        <div class="mt-2">
+            <form action="/integrantes/{{proyecto.id}}" method="POST">
+                <div class="">
+                    <div class="form-floating mb-3">
+                        <input type="number" name="fk_proyecto" id="fk_proyecto" value="{{proyecto.id}}" class="form-control" disabled hidden placeholder=" ">
+                        <label for="fk_proyecto">Id de proyecto:</label>                    
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" name="id" id="id" class="form-control" placeholder=" ">
+                        <label for="id">Id de integrante:</label>                    
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="text" name="nombre" id="nombre" class="form-control" placeholder=" ">
+                        <label for="nombre">Nombre del integrante:</label>                    
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" name="cargo" id="cargo" class="form-control" placeholder=" ">
+                        <label for="cargo">Cargo del integrante:</label>                    
+                    </div>
                 </div>
-                <div class="form-floating mb-3">
-                    <input type="number" name="id" id="id" class="form-control" placeholder=" ">
-                    <label for="id">Id de integrante:</label>                    
+                <div class="text-center mb-2">
+                    <button class="btn btn-primary btn-lg" type="submit">
+                        <i class="fa-solid fa-add"></i> Crear integrante
+                    </button>
                 </div>
-                
-                <div class="form-floating mb-3">
-                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder=" ">
-                    <label for="nombre">Nombre del integrante:</label>                    
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" name="cargo" id="cargo" class="form-control" placeholder=" ">
-                    <label for="cargo">Cargo del integrante:</label>                    
-                </div>
-            </div>
-            <div class="text-center mb-2">
-                <button class="btn btn-primary btn-lg" type="submit">
-                    <i class="fa-solid fa-add"></i> Crear integrante
-                </button>
-            </div>
+            </form>
         </div>
-    </form>
-</div>       
+    </div>
+</div>
 <div class="row mt-2" fade> 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

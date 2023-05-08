@@ -3,43 +3,36 @@
 {% block title %}Editar integrante{% endblock %}
 
 {% block body %}        
-    <div class="col-6 card">
+<div class="row mt-1">
+    <div class="col-6">
         <h4 class="card-text">Proyecto: {{proyecto.nombre}}</h4>            
-            <div class="border">
-                <div class="navbar">
-                    <div class="nav-item">
-                        <div class="table-responsive-xl">
-                            <table class="table table-primary">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre del proyecto</th>                                        
-                                        <th scope="col">Id del integrante</th>
-                                        <th scope="col">Nombre del integrante</th>
-                                        <th scope="col">Cargo del integrante</th>
-                                    </tr>
-                                </thead>                                
-                                <tbody>                                                                                  
-                                    <tr class="">
-                                        <td scope="row">{{ proyecto.nombre }}</td>
-                                        <td scope="row">{{ integrante.id }}</td>
-                                        <td scope="row">{{ integrante.nombre }}</td>
-                                        <td scope="row">{{ integrante.cargo }}</td>
-                                    </tr>                                                                    
-                                </tbody>                                
-                            </table>
-                        </div>                            
-                    </div>
-                </div>                                        
-            </div>                
+        <div class="table-responsive">                
+            <table class="table table-primary table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre del proyecto</th>                                        
+                        <th scope="col">Id del integrante</th>
+                        <th scope="col">Nombre del integrante</th>
+                        <th scope="col">Cargo del integrante</th>
+                    </tr>
+                </thead>                                
+                <tbody>                                                                                  
+                    <tr class="">
+                        <td scope="row">{{ proyecto.nombre }}</td>
+                        <td scope="row">{{ integrante.id }}</td>
+                        <td scope="row">{{ integrante.nombre }}</td>
+                        <td scope="row">{{ integrante.cargo }}</td>
+                    </tr>                                                                    
+                </tbody>                                
+            </table>                                             
+        </div>
     </div>
 
-
-
-    <div class="col">                
-        <form action="/editarIntegrante/{{proyecto.id}}/{{integrante.id}}" method="POST">
-            <div class="card">          
-                <div class="card-body">
-                    <h4 class="card-title">Formulario de edición de proyecto</h4>
+    <div class="col-6">                
+        <h4 class="card-title">Formulario de edición de proyecto</h4>
+        <div class="mt-2">
+            <form action="/editarIntegrante/{{proyecto.id}}/{{integrante.id}}" method="POST">
+                <div class="">
                     <div class="form-floating mb-3">
                         <input type="text" name="estado" id="estado" value="{{integrante.id}}" disabled class="form-control">
                         <label for="estado">Id del integrante:</label>
@@ -51,16 +44,18 @@
                     <div class="form-floating mb-3">
                         <input type="text" name="cargo" id="cargo" value="{{integrante.cargo}}" class="form-control">
                         <label for="cargo">Cargo del integrante:</label>
+                    </div>                
+                    <div class="text-center mb-2">
+                        <button class="btn btn-primary btn-lg" type="submit">
+                            <i class="fa-solid fa-add"></i> Actualizar integrante
+                        </button>
                     </div>
                 </div>
-                <div class="text-center mb-2">
-                    <button class="btn btn-primary btn-lg" type="submit">
-                        <i class="fa-solid fa-add"></i> Actualizar integrante
-                    </button>
-                </div>
-            </div>
-        </form>
-    </div>       
+            </form>
+        </div>
+    </div>     
+</div>
+      
     <div class="row mt-2" fade> 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}

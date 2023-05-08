@@ -4,46 +4,40 @@
 
 {% block body %}        
 <div class="row mt-1">
-    <div class="col-6 card">
+    <div class="col-6">
         <h4 class="card-text">Lista de iteraciones "{{proyecto.nombre}}"</h4>            
-            <div class="border">
-                <div class="navbar">
-                    <div class="nav-item">
-                        <div class="table-responsive-xl">
-                            <table class="table table-primary">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Id de iteración</th>
-                                        <th scope="col">Fecha_inicio</th>
-                                        <th scope="col">Fecha_termino</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>                                
-                                <tbody>                                
-                                {% for i in iteracion %}                                    
-                                    <tr class="">
-                                        <td scope="row">{{ i.id }}</td>
-                                        <td scope="row">{{ i.fecha_inicio }}</td>
-                                        <td scope="row">{{ i.fecha_termino }}</td>
-                                        <td scope="row">
-                                        <div class="nav-item">
-                                            <a class="btn btn-primary m-1" href="/editarIteracion/{{i.id}}/{{proyecto.id}}" role="button"><i class="fa-solid fa-edit"></i>Editar</a>
-                                            <a class="btn btn-danger m-1" href="/eliminarIteracion/{{i.id}}/{{proyecto.id}}" role="button"><i class="fa-solid fa-x"></i>Eliminar</a>
-                                        </div>
-                                        </td>
-                                    </tr>                                    
-                                {% endfor %}
-                                </tbody>                                
-                            </table>
-                        </div>                            
-                    </div>
-                </div>                                        
-            </div>                
+        <div class="table-responsive">
+            <table class="table table-primary table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Id de iteración</th>
+                        <th scope="col">Fecha_inicio</th>
+                        <th scope="col">Fecha_termino</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>                                
+                <tbody>                                
+                {% for i in iteracion %}                                    
+                    <tr class="">
+                        <td scope="row">{{ i.id }}</td>
+                        <td scope="row">{{ i.fecha_inicio }}</td>
+                        <td scope="row">{{ i.fecha_termino }}</td>
+                        <td scope="row">
+                        <div class="nav-item">
+                            <a class="btn btn-primary m-1" href="/editarIteracion/{{i.id}}/{{proyecto.id}}" role="button"><i class="fa-solid fa-edit"></i>Editar</a>
+                            <a class="btn btn-danger m-1" href="/eliminarIteracion/{{i.id}}/{{proyecto.id}}" role="button"><i class="fa-solid fa-x"></i>Eliminar</a>
+                        </div>
+                        </td>
+                    </tr>                                    
+                {% endfor %}
+                </tbody>                                
+            </table>
+        </div>
     </div>
 
     <div class="col-6">                
-        <div class="row">
-            <form action="/iteraciones/{{proyecto.id}}" method="POST">
+        <form action="/iteraciones/{{proyecto.id}}" method="POST">
+            <div class="row">
                 <div class="card">          
                     <div class="card-body">
                         <h4 class="card-title">Agregar iteracion</h4>
@@ -70,24 +64,22 @@
                         </button>
                     </div>
                 </div>
-            </form>
-        </div>
-
-        <div class="row mt-2" fade> 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="d-flex align-items-center justify-content-center">
-                    {% for category,message in messages %}
-                        <div class="alert col-lg-12  alert-{{category}} alert-dismissible show fade" role="alert">
-                            <strong>{{message}}</strong> 
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                        
-                        </div>    
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-        </div>
-
+            </div>
+        </form>
     </div>
-</div>       
+</div>
+<div class="row mt-2" fade> 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="d-flex align-items-center justify-content-center">
+            {% for category,message in messages %}
+                <div class="alert col-lg-12  alert-{{category}} alert-dismissible show fade" role="alert">
+                    <strong>{{message}}</strong> 
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>                        
+                </div>    
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+</div>
 {% endblock %}
