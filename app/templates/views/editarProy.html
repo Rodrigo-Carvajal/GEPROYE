@@ -7,28 +7,26 @@
     <div class="col-6">
         <h4 class="card-text">Proyecto {{proyecto.nombre}}</h4>            
         <div class="table-responsive">
-            <div class="table-responsive-xl">
-                <table class="table table-primary table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id del proyecto</th>
-                            <th scope="col">Nombre del proyecto</th>                                        
-                            <th scope="col">Fecha_inicio</th>
-                            <th scope="col">Fecha_termino</th>
-                            <th scope="col">Estado</th>
-                        </tr>
-                    </thead>                                
-                    <tbody>                                                                                  
-                        <tr class="">
-                            <td scope="row">{{ proyecto.id }}</td>
-                            <td scope="row">{{ proyecto.nombre }}</td>
-                            <td scope="row">{{ proyecto.fecha_inicio }}</td>
-                            <td scope="row">{{ proyecto.fecha_termino }}</td>
-                            <td scope="row">{{ proyecto.estado }}</td>
-                        </tr>                                                                    
-                    </tbody>                                
-                </table>
-            </div>                                                                    
+            <table class="table table-primary table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Id del proyecto</th>
+                        <th scope="col">Nombre del proyecto</th>                                        
+                        <th scope="col">Fecha_inicio</th>
+                        <th scope="col">Fecha_termino</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>                                
+                <tbody>                                                                                  
+                    <tr class="">
+                        <td scope="row">{{ proyecto.id }}</td>
+                        <td scope="row">{{ proyecto.nombre }}</td>
+                        <td scope="row">{{ proyecto.fecha_inicio }}</td>
+                        <td scope="row">{{ proyecto.fecha_termino }}</td>
+                        <td scope="row">{{ proyecto.estado }}</td>
+                    </tr>                                                                    
+                </tbody>                                
+            </table>                                                                    
         </div>                
     </div>
 

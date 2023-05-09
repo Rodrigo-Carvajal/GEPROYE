@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}GEPROYE{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}">  
 </head>
 <body class="p-2 m-1 row">
@@ -17,11 +17,8 @@
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavId">
         <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-          <li class="nav-item bg-danger rounded">
-            <a class="nav-link active" href="/backup" aria-current="page">Actualizar respaldo(Update Bruto)<span class="visually-hidden">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/compare">Comparar...</a>
+          <li class="nav-item bg-warning rounded m-1">
+            <a class="nav-link" href="/compare">Comparar base de datos</a>
           </li>          
         </ul>
       </div>
