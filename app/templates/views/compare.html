@@ -6,9 +6,51 @@
 <div class="row mt-1">
     <div class="row text-center mb-2">
         <div class="col">
-            <a name="" id="" class="btn btn-danger" href="/backup" role="button">Crear respaldo</a>
-        
-            <a name="" id="" class="btn btn-secondary" href="/update2" role="button">Actualizar la segunda base de datos en base a la segunda</a>
+            <!-- Modal para crear respaldo -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Crear respaldo
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar modificación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Al confirmar la creación de este respaldo, todos los datos que se encuentren en la base de datos de respaldo serán sobreescritos por los datos de la base de datos original.
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a name="" id="" class="btn btn-danger" href="/backup" role="button">Crear respaldo</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <!-- Modal actualizar bd -->
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Actualizar la base de datos original en base a la segunda
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmar modificación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    Al confirmar la copia de los datos, todos los datos que se encuentren en la base de datos original serán sobreescritos por los datos de la base de datos de respaldo.
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a name="" id="" class="btn btn-secondary" href="/update2" role="button">Actualizar la base de datos original en base a la segunda</a>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-6 card">
