@@ -1,3 +1,6 @@
+import requests
+import json
+
 from app import app, supabase_1, supabase_2
 from flask import Flask, render_template, request, url_for, redirect, flash, Blueprint, g
 
@@ -92,10 +95,13 @@ def update2():
         insertProyecto = supabase_1.table("requisito").insert(list).execute()
     return redirect(url_for('compare'))
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET'])
 def index():    
-    proyectos = g.db.table('proyecto').select('id, nombre, fecha_inicio, fecha_termino, estado').order("id").execute()
-    return render_template('views/index.html', proyectos=proyectos.data)
+    #proyectos = g.db.table('proyecto').select('id, nombre, fecha_inicio, fecha_termino, estado').order("id").execute()
+    response = requests.get('http://190.92.148.107:7070/v1/project')
+    proyectos = response.json()['data']
+    
+    return render_template('views/index.html', proyectos=proyectos)
 
 @app.route('/crearProyecto', methods=['POST']) #LISTOCA
 def crearProyecto():
@@ -140,7 +146,7 @@ def editarInteracion(id,fk_proyecto):
     proyecto = g.db.table('proyecto').select("*").eq("id", fk_proyecto).execute()
     return render_template('views/editarIteraciones.html', proyecto=proyecto.data[0], iteracion=iteracion.data[0])
 
-@app.route('/iteraciones/<int:id>', methods=['GET','POST']) #LISTOCO
+@app.route('<int:id>/iteraciones', methods=['GET','POST']) #LISTOCO
 def iteraciones(id):
     if request.method == 'POST':
         fk_proyecto = id
@@ -151,9 +157,12 @@ def iteraciones(id):
         insert = g.db.table('iteracion').insert(iteracion).execute()
         flash('Iteración creada exitosamente', 'success')
         return redirect(url_for('iteraciones', id=id))        
-    proyecto = g.db.table('proyecto').select("*").eq("id", id).order('id').execute()    
-    iteracion = g.db.table('iteracion').select("*").eq("fk_proyecto", id).order('id').execute()
-    return render_template('views/iteraciones.html', proyecto=proyecto.data[0], iteracion=iteracion.data)
+    #proyecto = g.db.table('proyecto').select("*").eq("id", id).order('id').execute()    
+    #iteracion = g.db.table('iteracion').select("*").eq("fk_proyecto", id).order('id').execute()
+    response_proyecto = requests.get('http://190.92.148.107:7070/v1/project/{}/'.format(id))
+    response_iteraciones = requests.get('http://190.92.148.107:7070/v1/project/{}/iteracion'.format(id))
+    proyecto = response_proyecto.json()['data'][0]
+    return render_template('views/iteraciones.html', proyecto=proyecto, iteracion=iteracion.data)
 
 @app.route('/eliminarIteracion/<int:id>/<int:fk_proyecto>', methods=['GET','POST']) #Listoco
 def eliminarInteraciones(id,fk_proyecto):
