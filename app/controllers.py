@@ -7,23 +7,14 @@ from flask import Flask, render_template, request, url_for, redirect, flash, Blu
 #Blueprint de la aplicación
 geproyeBp = Blueprint('app', __name__)
 
-#Middleware que conecta a la otra base de datos
-@app.before_request
-def before_request():
-    try:
-        connection = supabase_1
-        response = connection.table('proyecto').select("*").execute()
-        if response:
-            g.db = connection
-            print("¡Conectado a la primera base de datos!")
-        else:
-            raise Exception('¡Conexión fallida!')            
-    except Exception as e:
-        print(f"El intento de conexión a la primera base de datos arrojó el siguiente error:\n{e}")
-        connection = supabase_2
-        print("¡Conectado a la base de datos de respaldo!")
-    # Guarda la conexión en un contexto global a través de g
-    g.db = connection
+def get_public_ip():
+    response = requests.get('https://api.ipify.org?format=json')
+    if response.status_code == 200:
+        data = response.json()
+        public_ip = data['ip']
+        return public_ip
+    else:
+        return None
 
 #Ruta que compara los datos de las dos bases de datos
 @app.route('/compare', methods=['GET', 'POST'])
@@ -95,9 +86,19 @@ def update2():
         insertProyecto = supabase_1.table("requisito").insert(list).execute()
     return redirect(url_for('compare'))
 
+@app.route('/chat', methods=['GET'])
+def chat():
+    ip = get_public_ip()
+    r = requests.post('http://192.168.1.114:25565/v1/discover', data={ 'email': 'ejemplo@gmail.com', 'ip': ip })
+    response = requests.get('http://192.168.1.114:25565/v1/discover')
+    chatUsers = response.json()
+    print(ip)
+    print(chatUsers)
+    
+    return render_template('views/index.html')
+
 @app.route('/', methods=['GET'])
 def index():    
-    #proyectos = g.db.table('proyecto').select('id, nombre, fecha_inicio, fecha_termino, estado').order("id").execute()
     response = requests.get('http://190.92.148.107:7070/v1/project')
     proyectos = response.json()['data']
     
@@ -111,8 +112,12 @@ def crearProyecto():
         fecha_inicio = request.form['fecha_inicio']
         fecha_termino = request.form['fecha_termino']        
         proyecto = {'id': idproye, 'nombre': nombre, 'fecha_inicio': fecha_inicio, 'fecha_termino': fecha_termino}
-        insert = g.db.table('proyecto').insert(proyecto).execute()
-        flash('Proyecto creado exitosamente', 'success')
+        #insert = g.db.table('proyecto').insert(proyecto).execute()
+        response = requests.post('http://190.92.148.107:7070/v1/project', data=proyecto)
+        if response.error: 
+            flash('Error al crear proyecto: {}'.format(response.error), 'error')
+        else:
+            flash('Proyecto creado exitosamente', 'success')
     return redirect(url_for('index'))
 
 @app.route('/eliminarProyecto/<int:id>', methods=['GET','POST']) #LISTOCA
@@ -146,7 +151,7 @@ def editarInteracion(id,fk_proyecto):
     proyecto = g.db.table('proyecto').select("*").eq("id", fk_proyecto).execute()
     return render_template('views/editarIteraciones.html', proyecto=proyecto.data[0], iteracion=iteracion.data[0])
 
-@app.route('<int:id>/iteraciones', methods=['GET','POST']) #LISTOCO
+@app.route('/<int:id>/iteraciones', methods=['GET','POST']) #LISTOCO
 def iteraciones(id):
     if request.method == 'POST':
         fk_proyecto = id
