@@ -21,8 +21,8 @@
                     <tr class="">
                         <td scope="row">{{ proyecto.id }}</td>
                         <td scope="row">{{ proyecto.nombre }}</td>
-                        <td scope="row">{{ proyecto.fecha_inicio }}</td>
-                        <td scope="row">{{ proyecto.fecha_termino }}</td>
+                        <td scope="row">{{ proyecto.fechaInicio }}</td>
+                        <td scope="row">{{ proyecto.fechaTermino }}</td>
                         <td scope="row">{{ proyecto.estado }}</td>
                     </tr>                                                                    
                 </tbody>                                
@@ -45,11 +45,11 @@
                     </div>
                     
                     <div class="form-floating mb-3">
-                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{proyecto.fecha_inicio}}" placeholder=" ">
+                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" value="{{proyecto.fechaInicio}}" placeholder=" ">
                         <label for="fecha_inicio">Fecha de inicio de iteración:</label>                    
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" name="fecha_termino" id="fecha_termino" class="form-control" value="{{proyecto.fecha_termino}}" placeholder=" ">
+                        <input type="date" name="fecha_termino" id="fecha_termino" class="form-control" value="{{proyecto.fechaTermino}}" placeholder=" ">
                         <label for="fecha_termino">Fecha de término de iteración:</label>                    
                     </div>
                     <div class="form-floating mb-3">

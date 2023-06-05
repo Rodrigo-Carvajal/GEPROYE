@@ -25,99 +25,29 @@ def before_request():
     # Guarda la conexión en un contexto global a través de g
     g.db = connection
 
-#Ruta que compara los datos de las dos bases de datos
-@app.route('/compare', methods=['GET', 'POST'])
-def compare():
-    proyectos_1 = supabase_1.table('proyecto').select("*").execute()
-    proyectos_2 = supabase_2.table('proyecto').select("*").execute()
-    proyectos_1_iteraciones = supabase_1.table('iteracion').select("*").execute()
-    proyectos_2_iteraciones = supabase_2.table('iteracion').select("*").execute()
-    proyectos_1_integrantes = supabase_1.table('integrante').select("*").execute()
-    proyectos_2_integrantes = supabase_2.table('integrante').select("*").execute()
-    proyectos_1_requisitos = supabase_1.table('requisito').select("*").execute()
-    proyectos_2_requisitos = supabase_2.table('requisito').select("*").execute()
-    return render_template('views/compare.html', proyectos_1=proyectos_1.data, proyectos_2=proyectos_2.data, proyectos_1_iteraciones=proyectos_1_iteraciones.data, proyectos_2_iteraciones=proyectos_2_iteraciones.data, proyectos_1_requisitos=proyectos_1_requisitos.data, proyectos_2_requisitos=proyectos_2_requisitos.data, proyectos_1_integrantes=proyectos_1_integrantes.data, proyectos_2_integrantes=proyectos_2_integrantes.data)
-
-#Función que actualiza los datos de la base de datos de respaldo en base a la original
-@app.route('/backup', methods=['GET','POST'])
-def backup():
-    proyectos_1 = supabase_1.table('proyecto').select("*").execute()
-    dictionary_1 = proyectos_1.data
-    proyectos_1_iteracion = supabase_1.table('iteracion').select("*").execute()
-    dictionary_1_iteracion = proyectos_1_iteracion.data
-    proyectos_1_requisito = supabase_1.table('requisito').select("*").execute()
-    dictionary_1_requisito = proyectos_1_requisito.data
-    proyectos_1_integrante = supabase_1.table('integrante').select("*").execute()
-    dictionary_1_integrante = proyectos_1_integrante.data
-    proyectos_2 = supabase_2.table('proyecto').select("id").execute()
-    dictionary_2 = proyectos_2.data
-    for list in dictionary_2:
-        value = list['id']
-        deleteProyecto = supabase_2.table("proyecto").delete().eq("id", value).execute()
-        deleteIteracion = supabase_2.table("iteracion").delete().eq("id", value).execute()
-        deleteIntegrante = supabase_2.table("integrante").delete().eq("id", value).execute()
-        deleteRequisito = supabase_2.table("requisito").delete().eq("id", value).execute()
-    for list in dictionary_1:
-        insertProyecto = supabase_2.table("proyecto").insert(list).execute()
-    for list in dictionary_1_iteracion:
-        insertProyecto = supabase_2.table("iteracion").insert(list).execute()
-    for list in dictionary_1_integrante:
-        insertProyecto = supabase_2.table("integrante").insert(list).execute()
-    for list in dictionary_1_requisito:
-        insertProyecto = supabase_2.table("requisito").insert(list).execute()
-    return redirect(url_for('compare'))
-
-@app.route('/update2', methods=['GET','POST'])
-def update2():
-    proyectos_2 = supabase_2.table('proyecto').select("*").execute()
-    dictionary_2 = proyectos_2.data
-    proyectos_2_iteracion = supabase_2.table('iteracion').select("*").execute()
-    dictionary_2_iteracion = proyectos_2_iteracion.data
-    proyectos_2_requisito = supabase_2.table('requisito').select("*").execute()
-    dictionary_2_requisito = proyectos_2_requisito.data
-    proyectos_2_integrante = supabase_2.table('integrante').select("*").execute()
-    dictionary_2_integrante = proyectos_2_integrante.data
-    proyectos_1 = supabase_1.table('proyecto').select("id").execute()
-    dictionary_1 = proyectos_1.data
-    for list in dictionary_1:
-        value = list['id']
-        deleteProyecto = supabase_1.table("proyecto").delete().eq("id", value).execute()
-        deleteIteracion = supabase_1.table("iteracion").delete().eq("id", value).execute()
-        deleteIntegrante = supabase_1.table("integrante").delete().eq("id", value).execute()
-        deleteRequisito = supabase_1.table("requisito").delete().eq("id", value).execute()
-    for list in dictionary_2:
-        insertProyecto = supabase_1.table("proyecto").insert(list).execute()
-    for list in dictionary_2_iteracion:
-        insertProyecto = supabase_1.table("iteracion").insert(list).execute()
-    for list in dictionary_2_integrante:
-        insertProyecto = supabase_1.table("integrante").insert(list).execute()
-    for list in dictionary_2_requisito:
-        insertProyecto = supabase_1.table("requisito").insert(list).execute()
-    return redirect(url_for('compare'))
-
 @app.route('/', methods=['GET'])
 def index():    
     #proyectos = g.db.table('proyecto').select('id, nombre, fecha_inicio, fecha_termino, estado').order("id").execute()
     response = requests.get('http://190.92.148.107:7070/v1/project')
     proyectos = response.json()['data']
-    
     return render_template('views/index.html', proyectos=proyectos)
 
 @app.route('/crearProyecto', methods=['POST']) #LISTOCA
 def crearProyecto():
     if request.method == 'POST':
-        idproye = request.form['id']
         nombre = request.form['nombre']
         fecha_inicio = request.form['fecha_inicio']
         fecha_termino = request.form['fecha_termino']        
-        proyecto = {'id': idproye, 'nombre': nombre, 'fecha_inicio': fecha_inicio, 'fecha_termino': fecha_termino}
-        insert = g.db.table('proyecto').insert(proyecto).execute()
+        proyecto = {'nombre': nombre, 'fechaInicio': fecha_inicio, 'fechaTermino': fecha_termino, 'estado': "Creado"}
+        #insert = g.db.table('proyecto').insert(proyecto).execute()
+        insert = requests.post('http://190.92.148.107:7070/v1/project/', data=proyecto)
         flash('Proyecto creado exitosamente', 'success')
     return redirect(url_for('index'))
 
 @app.route('/eliminarProyecto/<int:id>', methods=['GET','POST']) #LISTOCA
 def eliminarProyecto(id):
-    proyecto = g.db.table('proyecto').delete().eq("id", id).execute()
+    #proyecto = g.db.table('proyecto').delete().eq("id", id).execute()
+    delete = requests.delete('http://190.92.148.107:7070/v1/project/{}/'.format(id))
     flash('Proyecto eliminado exitosamente', 'danger')
     return redirect(url_for('index'))
 
@@ -128,41 +58,55 @@ def editarProyecto(id):
         fecha_inicio = request.form['fecha_inicio']
         fecha_termino = request.form['fecha_termino']
         estado = request.form['estado']
-        update = g.db. table('proyecto').update({"nombre": nombre, "fecha_inicio": fecha_inicio, "fecha_termino":fecha_termino, "estado": estado}).eq("id", id).execute()
+        edit = {'nombre': nombre, 'fechaInicio': fecha_inicio, 'fechaTermino': fecha_termino, 'estado': estado}
+        #update = g.db. table('proyecto').update({"nombre": nombre, "fecha_inicio": fecha_inicio, "fecha_termino":fecha_termino, "estado": estado}).eq("id", id).execute()
+        update = requests.patch('http://190.92.148.107:7070/v1/project/{}/'.format(id), data=edit)
         flash('Proyecto editado exitosamente', 'info')
         return redirect(url_for('index'))
-    proyecto = g.db.table('proyecto').select("*").eq("id", id).execute()
-    return render_template('views/editarProy.html', proyecto=proyecto.data[0])
+    #proyecto = g.db.table('proyecto').select("*").eq("id", id).execute()
+    response = requests.get('http://190.92.148.107:7070/v1/project/{}/'.format(id))
+    proyecto = response.json()['data']
+    return render_template('views/editarProy.html', proyecto=proyecto[0])
 
 @app.route('/editarIteracion/<int:id>/<int:fk_proyecto>', methods=['GET','POST']) 
 def editarInteracion(id,fk_proyecto):
     if request.method == 'POST':
         fecha_inicio = request.form['fecha_inicio']
         fecha_termino = request.form['fecha_termino']
-        update = g.db.table('iteracion').update({"fecha_inicio": fecha_inicio, "fecha_termino": fecha_termino}).eq("fk_proyecto", fk_proyecto).eq("id", id).execute()
+        edit = {'fechaInicio' : fecha_inicio, 'fechaTermino' : fecha_termino}
+        #update = g.db.table('iteracion').update({"fecha_inicio": fecha_inicio, "fecha_termino": fecha_termino}).eq("fk_proyecto", fk_proyecto).eq("id", id).execute()
+        update = requests.patch('http://190.92.148.107:7070/v1/project/{}/iteration/{}/'.format(id, fk_proyecto))
         flash('Iteración editada exitosamente', 'info')
         return redirect(url_for('index'))
-    iteracion = g.db.table('iteracion').select("*").eq("id", id).execute()
-    proyecto = g.db.table('proyecto').select("*").eq("id", fk_proyecto).execute()
-    return render_template('views/editarIteraciones.html', proyecto=proyecto.data[0], iteracion=iteracion.data[0])
+    #iteracion = g.db.table('iteracion').select("*").eq("id", id).execute()
+    response1 = requests.get('http://190.92.148.107:7070/v1/project/{}/iteration/{}/'.format(fk_proyecto, id))
+    print(response1.json())
+    #proyecto = g.db.table('proyecto').select("*").eq("id", fk_proyecto).execute()
+    response2 = requests.get('http://190.92.148.107:7070/v1/project/{}/'.format(fk_proyecto))
+    print(response2.json())
+    iteracion = response1.json()['data']
+    proyecto = response2.json()['data']
+    print(iteracion)
+    print(proyecto)
+    return render_template('views/editarIteraciones.html', proyecto=proyecto, iteracion=iteracion)
 
-@app.route('<int:id>/iteraciones', methods=['GET','POST']) #LISTOCO
+@app.route('/iteraciones/<int:id>', methods=['GET','POST']) #LISTOCO
 def iteraciones(id):
     if request.method == 'POST':
-        fk_proyecto = id
-        id_iteracion = request.form['id']
         fecha_inicio= request.form['fecha_inicio']
         fecha_termino=request.form['fecha_termino']
-        iteracion = {'id': id_iteracion, 'fk_proyecto': fk_proyecto, 'fecha_inicio': fecha_inicio, 'fecha_termino':fecha_termino}
-        insert = g.db.table('iteracion').insert(iteracion).execute()
+        create = {'fechaInicio': fecha_inicio, 'fechaTermino':fecha_termino}
+        #insert = g.db.table('iteracion').insert(iteracionn).execute()
+        update = requests.post('http://190.92.148.107:7070/v1/project/{}/iteration/'.format(id), data=create)
         flash('Iteración creada exitosamente', 'success')
         return redirect(url_for('iteraciones', id=id))        
     #proyecto = g.db.table('proyecto').select("*").eq("id", id).order('id').execute()    
     #iteracion = g.db.table('iteracion').select("*").eq("fk_proyecto", id).order('id').execute()
     response_proyecto = requests.get('http://190.92.148.107:7070/v1/project/{}/'.format(id))
-    response_iteraciones = requests.get('http://190.92.148.107:7070/v1/project/{}/iteracion'.format(id))
+    response_iteraciones = requests.get('http://190.92.148.107:7070/v1/project/{}/iteration'.format(id))
     proyecto = response_proyecto.json()['data'][0]
-    return render_template('views/iteraciones.html', proyecto=proyecto, iteracion=iteracion.data)
+    iteracion = response_iteraciones.json()['data']
+    return render_template('views/iteraciones.html', proyecto=proyecto, iteracion=iteracion)
 
 @app.route('/eliminarIteracion/<int:id>/<int:fk_proyecto>', methods=['GET','POST']) #Listoco
 def eliminarInteraciones(id,fk_proyecto):
